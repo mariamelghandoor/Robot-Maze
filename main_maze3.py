@@ -1,9 +1,9 @@
 from maze import Maze
 from agent import Agent
+import json
 
-maze3 = [
-    
-]
+with open('Mazes json\maze3.json', 'r') as file:
+    maze3 = json.load(file)
 
 if __name__ == "__main__":
     maze = Maze(maze3)

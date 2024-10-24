@@ -2,7 +2,7 @@ from maze import Maze
 from agent import Agent
 import json
 
-with open('Mazes json\maze1.json', 'r') as file:
+with open('Mazes json\maze2.json', 'r') as file:
     maze2 = json.load(file)
 
 if __name__ == "__main__":
