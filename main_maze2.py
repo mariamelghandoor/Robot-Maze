@@ -1,5 +1,6 @@
 from maze import Maze
-from agent import Agent
+from bfs_agent import BFSAgent
+from dfs_agent import DFSAgent
 import json
 
 with open('Mazes json\maze2.json', 'r') as file:
@@ -7,13 +8,14 @@ with open('Mazes json\maze2.json', 'r') as file:
 
 if __name__ == "__main__":
     maze = Maze(maze2)
-    agent = Agent(maze)
 
     # BFS
-    bfs_path = agent.bfs()
-    maze.plot(bfs_path, 'BFS')
+    bfs_agent = BFSAgent(maze)
+    path_bfs = bfs_agent.bfs()
+    maze.plot(path_bfs, 'BFS')
 
-    agent.reset_visited()
     # DFS
-    dfs_path = agent.dfs()
-    maze.plot(dfs_path, 'DFS')
+    dfs_agent = DFSAgent(maze)
+    path_dfs = dfs_agent.dfs()
+    maze.plot(path_dfs, 'BFS')
+
