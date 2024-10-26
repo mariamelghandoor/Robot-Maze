@@ -13,6 +13,7 @@ if __name__ == "__main__":
     # BFS
     bfs_agent = BFSAgent(maze)
     path_bfs = bfs_agent.bfs()
+    maze.print_maze(path_bfs)
     maze.plot(path_bfs, 'BFS')
 
     # DFS

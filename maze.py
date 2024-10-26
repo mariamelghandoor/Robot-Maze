@@ -2,6 +2,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+class Colors:
+    red = '\033[91m'
+    yellow = '\033[93m'
+    purple = '\033[95m'
+    reset = '\033[0m'
+
 class Maze:
     def __init__(self, grid):
         self.grid = grid
@@ -43,3 +49,28 @@ class Maze:
         plt.title(f'Maze Visualization with {method_name} Path', fontsize=16)
 
         plt.show()
+
+    def print_maze(self, path=None):
+        path_set = set(path) if path else set()
+        print("██" * (self.width + 2)) 
+        
+        for i, row in enumerate(self.grid):
+            print("██", end='')
+            
+            for j, cell in enumerate(row):
+                pos = (i, j)
+                
+                if pos == self.start:
+                    print(" S", end='')
+                elif pos == self.goal:
+                    print(" G", end='')
+                elif pos in path_set:
+                    print("❤️", end='') 
+                elif cell == 1:
+                    print("  ", end='')
+                elif cell == 0:
+                    print("██", end='')
+            
+            print("██")
+        print("██" * (self.width + 2))
+
