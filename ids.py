@@ -2,7 +2,7 @@ import time
 from agent import Agent
 
 class IDSAgent(Agent):
-    def ids(self, max_depth = 100):
+    def ids(self, max_depth = 1000000000):
         start_time = time.time()
         for depth in range(max_depth + 1):
             self.reset_visited()
