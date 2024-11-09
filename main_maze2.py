@@ -2,6 +2,7 @@ from maze import Maze
 from bfs_agent import BFSAgent
 from dfs_agent import DFSAgent
 from ids import IDSAgent
+from UCS import UCSAgent
 import json
 
 with open('Mazes json\maze2.json', 'r') as file:
@@ -25,3 +26,8 @@ if __name__ == "__main__":
     ids_agent = IDSAgent(maze)
     path_ids = ids_agent.ids()
     maze.plot(path_ids, 'IDS')
+
+    #UCS
+    ucs_agent = UCSAgent(maze)
+    path_ucs = ucs_agent.ucs()
+    maze.plot(path_ucs, 'UCS')

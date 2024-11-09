@@ -21,6 +21,10 @@ class Maze:
         in_bounds = 0 <= x < self.height and 0 <= y < self.width
         cell_is_open = self.grid[x][y] != 1 if in_bounds else False
         return in_bounds and cell_is_open
+    
+    def __getitem__(self, item):
+        x, y = item
+        return self.grid[x][y]
 
     def plot(self, path, method_name):
         maze_array = np.array(self.grid)
@@ -32,9 +36,14 @@ class Maze:
 
         if path:
             # Extract x and y coordinates from the path
-            path_x = [coord[0] for coord in path]  # Row
-            path_y = [coord[1] for coord in path]  # Column
-            cost = [maze_array_cost[coord[0]][coord[1]] for coord in path]
+            if type(path[0]) == int:
+                path_x = [coord[0] for coord in path[1]]  # Row
+                path_y = [coord[1] for coord in path[1]]  # Column
+                cost = [maze_array_cost[coord[0]][coord[1]] for coord in path[1]]
+            else:
+                path_x = [coord[0] for coord in path]  # Row
+                path_y = [coord[1] for coord in path]  # Column
+                cost = [maze_array_cost[coord[0]][coord[1]] for coord in path]
           
             Total = sum(cost)
             
