@@ -8,6 +8,7 @@ class GreedyAgent(Agent):
         return abs(x - goal_x) + abs(y - goal_y)
 
     def greedy(self):    
+        
         start_time = time.time()
         pq = PriorityQueue()
         pq.put((0, [self.maze.start]))

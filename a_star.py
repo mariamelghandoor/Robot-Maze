@@ -29,7 +29,7 @@ class A_StarAgent(Agent):
             for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                 nx, ny = x + dx, y + dy
                 if self.maze.is_open(nx, ny) and not self.visited[nx][ny]:
-                    new_g_cost = g_cost[(x, y)] + 1  # cost of 1 per step
+                    new_g_cost = g_cost[(x, y)] + self.maze[x,y]  # cost of 1 per step
                     if (nx, ny) not in g_cost or new_g_cost < g_cost[(nx, ny)]:
                         g_cost[(nx, ny)] = new_g_cost
                         f_cost = new_g_cost + self.heuristic(nx, ny)
