@@ -36,19 +36,11 @@ class Maze:
 
         if path:
             # Extract x and y coordinates from the path
-            if type(path[0]) == int:
-                path_x = [coord[0] for coord in path[1]]  # Row
-                path_y = [coord[1] for coord in path[1]]  # Column
-                cost = [maze_array_cost[coord[0]][coord[1]] for coord in path[1]]
-            else:
-                path_x = [coord[0] for coord in path]  # Row
-                path_y = [coord[1] for coord in path]  # Column
-                cost = [maze_array_cost[coord[0]][coord[1]] for coord in path]
-          
+            path_x = [coord[0] for coord in path]  # Row
+            path_y = [coord[1] for coord in path]  # Column
+            cost = [maze_array_cost[coord[0]][coord[1]] for coord in path]
             Total = sum(cost)
             
-            print('\n')
-
             plt.plot(path_y, path_x, label=f'{method_name} Path', linewidth=2, marker='o', markersize=6)
 
         plt.scatter(self.start[1], self.start[0], color='green', label='Start', s=200, marker='o')

@@ -5,6 +5,7 @@ from ids import IDSAgent
 from UCS import UCSAgent
 from greedy import GreedyAgent
 from a_star import A_StarAgent
+from hill_climbing import HillClimbingAgent
 import json
 
 with open('Mazes json\maze3.json', 'r') as file:
@@ -42,3 +43,8 @@ if __name__ == "__main__":
     astar_agent = A_StarAgent(maze)
     path_astar = astar_agent.a_star()
     maze.plot(path_astar, 'astar')
+
+    # Hill Climbing
+    hill_climbing_agent = HillClimbingAgent(maze)
+    path_hill_climbing = hill_climbing_agent.hill_climbing()
+    maze.plot(path_hill_climbing, 'Hill Climbing')

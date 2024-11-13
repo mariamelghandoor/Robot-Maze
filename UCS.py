@@ -27,6 +27,7 @@ class UCSAgent(Agent):
             x, y = current_node
             node_cost = self.maze[current_node]
 
+            
             # Check if we've reached the goal
             if (x, y) == self.maze.goal:
                 end_time = time.time()
@@ -37,7 +38,7 @@ class UCSAgent(Agent):
                 total_path_cost = sum(self.maze[node] for node in path)
                 print(f"Total path cost: {total_path_cost}")
                 
-                return total_path_cost, path
+                return path # total_path_cost, path
             
             # Explore neighbors
             for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
@@ -61,4 +62,3 @@ class UCSAgent(Agent):
 
         print("No path found from start to goal.")
         return None
-
