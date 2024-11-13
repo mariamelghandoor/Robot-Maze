@@ -41,4 +41,4 @@ if __name__ == "__main__":
     #AStar
     astar_agent = A_StarAgent(maze)
     path_astar = astar_agent.a_star()
-    maze.plot(path_astar, 'greedy')
+    maze.plot(path_astar, 'astar')

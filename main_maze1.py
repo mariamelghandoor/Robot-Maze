@@ -43,3 +43,4 @@ if __name__ == "__main__":
     path_astar = astar_agent.a_star()
     maze.plot(path_astar, 'astar')
 
+

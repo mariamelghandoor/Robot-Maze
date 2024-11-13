@@ -24,12 +24,9 @@ class UCSAgent(Agent):
 
         while pqueue:
             current_cost, current_node = heapq.heappop(pqueue)
-            print(current_node)
             x, y = current_node
             node_cost = self.maze[current_node]
 
-            print(node_cost)
-            
             # Check if we've reached the goal
             if (x, y) == self.maze.goal:
                 end_time = time.time()
