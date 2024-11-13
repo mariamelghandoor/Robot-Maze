@@ -4,6 +4,7 @@ from dfs_agent import DFSAgent
 from ids import IDSAgent
 from UCS import UCSAgent
 from greedy import GreedyAgent
+from a_star import A_StarAgent
 import json
 
 with open('Mazes json\maze1.json', 'r') as file:
@@ -36,4 +37,9 @@ if __name__ == "__main__":
     greedy_agent = GreedyAgent(maze)
     path_greedy = greedy_agent.greedy()
     maze.plot(path_greedy, 'greedy')
+
+    #AStar
+    astar_agent = A_StarAgent(maze)
+    path_astar = astar_agent.a_star()
+    maze.plot(path_astar, 'greedy')
 
