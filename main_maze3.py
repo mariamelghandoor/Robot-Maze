@@ -51,6 +51,6 @@ if __name__ == "__main__":
     maze.plot(path_hill_climbing, 'Hill Climbing')
 
     # Genetic
-    genetic_agent = GeneticAgent(maze,max_path_length=11000)
+    genetic_agent = GeneticAgent(maze,max_path_length=12000)
     path_genetic = genetic_agent.genetic()
     maze.plot(path_genetic, 'Genetic')
