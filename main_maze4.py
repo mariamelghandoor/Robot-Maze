@@ -8,11 +8,11 @@ from a_star import A_StarAgent
 from hill_climbing import HillClimbingAgent
 import json
 
-with open('Mazes json\maze1.json', 'r') as file:
-    maze1 = json.load(file)
+with open('Mazes json\maze4.json', 'r') as file:
+    maze4 = json.load(file)
 
 if __name__ == "__main__":
-    maze = Maze(maze1)
+    maze = Maze(maze4)
 
     # BFS
     bfs_agent = BFSAgent(maze)

@@ -24,11 +24,9 @@ class UCSAgent(Agent):
 
         while pqueue:
             current_cost, current_node = heapq.heappop(pqueue)
-            print(current_node)
             x, y = current_node
             node_cost = self.maze[current_node]
 
-            print(node_cost)
             
             # Check if we've reached the goal
             if (x, y) == self.maze.goal:
@@ -40,7 +38,7 @@ class UCSAgent(Agent):
                 total_path_cost = sum(self.maze[node] for node in path)
                 print(f"Total path cost: {total_path_cost}")
                 
-                return total_path_cost, path
+                return path # total_path_cost, path
             
             # Explore neighbors
             for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
@@ -64,4 +62,3 @@ class UCSAgent(Agent):
 
         print("No path found from start to goal.")
         return None
-
