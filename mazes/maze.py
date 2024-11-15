@@ -28,7 +28,7 @@ class Maze:
 
     def plot(self, path, method_name):
         maze_array = np.array(self.grid)
-        # maze_array_cost = copy.deepcopy(maze_array)
+        maze_array_cost = copy.deepcopy(maze_array)
         plt.figure(figsize=(10, 10))
         maze_array = np.where(maze_array == 1, 1, 0)
         cmap = plt.get_cmap('binary')
@@ -38,8 +38,9 @@ class Maze:
             # Extract x and y coordinates from the path
             path_x = [coord[0] for coord in path]  # Row
             path_y = [coord[1] for coord in path]  # Column
-            # cost = [maze_array_cost[coord[0]][coord[1]] for coord in path]
-            # Total = sum(cost)
+            cost = [maze_array_cost[coord[0]][coord[1]] for coord in path]
+            Total = sum(cost)
+            Total = "{:,}".format(Total)
             
             plt.plot(path_y, path_x, label=f'{method_name} Path', linewidth=2, marker='o', markersize=6)
 
@@ -54,7 +55,7 @@ class Maze:
         plt.grid(True, which='minor', color='black', linestyle='-', linewidth=2)
 
         plt.legend(loc='upper right')
-        plt.title(f'Maze Visualization with {method_name} Path with Total Cost', fontsize=16)
+        plt.title(f'Maze Visualization with {method_name} Path with Total Cost {Total}', fontsize=16)
 
         plt.show()
 

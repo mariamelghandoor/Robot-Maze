@@ -54,6 +54,11 @@ if __name__ == "__main__":
     path_hill_climbing = hill_climbing_agent.hill_climbing()
     maze.plot(path_hill_climbing, 'Hill Climbing')
 
+    # Simulated Annealing
+    sa = Simulated(maze)
+    path_sa = sa.simulated_annealing()
+    maze.plot(path_sa, "Simulated Annealing")
+
     # Genetic
     genetic_agent = GeneticAgent(maze,max_path_length=2000)
     path_genetic = genetic_agent.genetic()

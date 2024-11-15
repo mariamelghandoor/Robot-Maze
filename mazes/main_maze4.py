@@ -19,10 +19,7 @@ with open('Mazes json\maze4.json', 'r') as file:
 if __name__ == "__main__":
     maze = Maze(maze4)
 
-    # Simulated Annealing
-    sa = Simulated(maze)
-    path_sa = sa.simulated_annealing()
-    maze.plot(path_sa, "Simulated Annealing")
+    
 
     # BFS
     bfs_agent = BFSAgent(maze)
@@ -58,6 +55,11 @@ if __name__ == "__main__":
     hill_climbing_agent = HillClimbingAgent(maze)
     path_hill_climbing = hill_climbing_agent.hill_climbing()
     maze.plot(path_hill_climbing, 'Hill Climbing')
+
+    # Simulated Annealing
+    sa = Simulated(maze)
+    path_sa = sa.simulated_annealing()
+    maze.plot(path_sa, "Simulated Annealing")
 
     # Genetic
     genetic_agent = GeneticAgent(maze,max_path_length=11000)
