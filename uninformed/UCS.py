@@ -3,6 +3,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import time
 import heapq
+import tracemalloc
 from queue import Queue
 from agent import Agent
 
@@ -18,6 +19,7 @@ class UCSAgent(Agent):
     
 
     def ucs(self):
+        tracemalloc.start()
         start_time = time.time()
         
         pqueue = [(0, self.maze.start)]  # Priority queue with (cost, node)
@@ -35,8 +37,9 @@ class UCSAgent(Agent):
             if (x, y) == self.maze.goal:
                 end_time = time.time()
                 execution_time = end_time - start_time
+                current, peak = tracemalloc.get_traced_memory()
                 print(f"UCS execution time: {execution_time:.6f} seconds")
-                
+                print(f"Peak Memory Usage in UCS: {peak / 1024/ 1024:.2f} MB")
                 path = self.construct_path(self.visited, self.maze.start, self.maze.goal)
                 total_path_cost = sum(self.maze[node] for node in path)
                 print(f"Total path cost: {total_path_cost}")
@@ -61,7 +64,8 @@ class UCSAgent(Agent):
 
         end_time = time.time()
         execution_time = end_time - start_time
+        current, peak = tracemalloc.get_traced_memory()
         print(f"UCS execution time: {execution_time:.6f} seconds")
-
+        print(f"Peak Memory Usage in UCS: {peak / 1024/ 1024:.2f} MB")
         print("No path found from start to goal.")
         return None

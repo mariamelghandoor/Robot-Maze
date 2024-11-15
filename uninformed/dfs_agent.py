@@ -2,12 +2,13 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import time
+import tracemalloc
 from agent import Agent
 
 class DFSAgent(Agent):
     def dfs(self):
+        tracemalloc.start()
         start_time = time.time()
-        
         stack = [[self.maze.start]]
         self.reset_visited()
         self.visited[self.maze.start[0]][self.maze.start[1]] = True
@@ -21,8 +22,9 @@ class DFSAgent(Agent):
 
                 end_time = time.time() 
                 execution_time = end_time - start_time 
+                current, peak = tracemalloc.get_traced_memory()
                 print(f"DFS execution time: {execution_time:.6f} seconds")
-
+                print(f"Peak Memory Usage in DFS: {peak / 1024 / 1024:.2f} MB")
                 return path
             
             # Explore neighbors
@@ -36,7 +38,8 @@ class DFSAgent(Agent):
 
         end_time = time.time()
         execution_time = end_time - start_time
+        current, peak = tracemalloc.get_traced_memory()
         print(f"DFS execution time: {execution_time:.6f} seconds")
-        
+        print(f"Peak Memory Usage in DFS: {peak / 1024 / 1024:.2f} MB")
         print("No path found from start to goal.")
         return None

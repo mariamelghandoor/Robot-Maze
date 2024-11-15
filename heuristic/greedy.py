@@ -2,6 +2,7 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import time
+import tracemalloc
 from queue import PriorityQueue
 from agent import Agent
 
@@ -11,7 +12,7 @@ class GreedyAgent(Agent):
         return abs(x - goal_x) + abs(y - goal_y)
 
     def greedy(self):    
-        
+        tracemalloc.start()
         start_time = time.time()
         pq = PriorityQueue()
         pq.put((0, [self.maze.start]))
@@ -25,7 +26,9 @@ class GreedyAgent(Agent):
             if (x, y) == self.maze.goal:
                 end_time = time.time()
                 execution_time = end_time - start_time
+                current, peak = tracemalloc.get_traced_memory()
                 print(f"Greedy search execution time: {execution_time:.6f} seconds")
+                print(f"Peak Memory Usage in Greedy: {peak / 1024/ 1024:.2f} MB")
                 return path
             
             for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
@@ -38,6 +41,8 @@ class GreedyAgent(Agent):
 
         end_time = time.time()
         execution_time = end_time - start_time
+        current, peak = tracemalloc.get_traced_memory()
         print(f"Greedy search execution time: {execution_time:.6f} seconds")
+        print(f"Peak Memory Usage: {peak / 1024/ 1024:.2f} MB")
         print("No path found from start to goal.")
         return None

@@ -2,11 +2,13 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import time
+import tracemalloc
 from agent import Agent
 
 class HillClimbingAgent(Agent):
     def hill_climbing(self):
         '''Performs Hill Climbing search on the maze and returns the path.'''
+        tracemalloc.start()
         start_time = time.time()
         
         current_position = self.maze.start
@@ -26,7 +28,9 @@ class HillClimbingAgent(Agent):
             if current_position == self.maze.goal:
                 end_time = time.time()
                 execution_time = end_time - start_time
+                current, peak = tracemalloc.get_traced_memory()
                 print(f"Hill Climbing execution time: {execution_time:.6f} seconds")
+                print(f"Peak Memory Usage in Hill Climbing: {peak / 1024/ 1024:.2f} MB")
                 return path  # Return the path to the goal
 
             # Generate neighbors
@@ -54,7 +58,9 @@ class HillClimbingAgent(Agent):
         
         end_time = time.time()
         execution_time = end_time - start_time
+        current, peak = tracemalloc.get_traced_memory()
         print(f"Hill Climbing execution time: {execution_time:.6f} seconds")
+        print(f"Peak Memory Usage in Hill Climbing: {peak / 1024/ 1024:.2f} MB")
         print("Local maximum reached; no path found to goal.")
         
         return path

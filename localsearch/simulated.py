@@ -1,6 +1,7 @@
 import math
 import time
 import random
+import tracemalloc
 from collections import OrderedDict
 
 class Simulated:
@@ -18,6 +19,7 @@ class Simulated:
 
     def simulated_annealing(self, n_iterations=1000, temp=10000, max_restarts=3):
         # Initialize start point and path
+        tracemalloc.start()
         start_time = time.time()
         x, y = self.maze.start
         path = [(x, y)]
@@ -64,11 +66,15 @@ class Simulated:
                 if (x, y) == self.maze.goal:
                     end_time = time.time()
                     execution_time = end_time - start_time
+                    current, peak = tracemalloc.get_traced_memory()
                     print(f"Simulated Annealing execution time: {execution_time:.6f} seconds")
+                    print(f"Peak Memory Usage in Simulated Annealing: {peak / 1024 / 1024:.2f} MB")
                     return path  # Return only the final path once the goal is reached
 
         # Return the path as it stands if iterations run out
         end_time = time.time()
         execution_time = end_time - start_time
+        current, peak = tracemalloc.get_traced_memory()
         print(f"Simulated Annealing execution time: {execution_time:.6f} seconds")
+        print(f"Peak Memory Usage in Simulated Annealing: {peak / 1024 / 1024:.2f} MB")
         return path

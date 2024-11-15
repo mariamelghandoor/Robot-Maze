@@ -3,6 +3,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import time
 import random
+import tracemalloc
 from queue import PriorityQueue
 from agent import Agent
 
@@ -57,6 +58,7 @@ class GeneticAgent(Agent):
         return path[:self.max_path_length]  
 
     def genetic(self):
+        tracemalloc.start()
         start_time = time.time()
         
         population = self.generate_initial_population()
@@ -67,7 +69,9 @@ class GeneticAgent(Agent):
             if self.fitness(population[0]) >= 0:
                 end_time = time.time()
                 execution_time = end_time - start_time
+                current, peak = tracemalloc.get_traced_memory()
                 print(f"Genetic search execution time: {execution_time:.6f} seconds")
+                print(f"Peak Memory Usage in Genetic: {peak / 1024/ 1024:.2f} MB")
                 return population[0]  
             
             new_population = population[:self.population_size // 2]  
@@ -81,6 +85,8 @@ class GeneticAgent(Agent):
         
         end_time = time.time()
         execution_time = end_time - start_time
+        current, peak = tracemalloc.get_traced_memory()
         print(f"Genetic search execution time: {execution_time:.6f} seconds")
+        print(f"Peak Memory Usage in Genetic: {peak / 1024/ 1024:.2f} MB")
         print("No path found from start to goal.")
         return population[0]

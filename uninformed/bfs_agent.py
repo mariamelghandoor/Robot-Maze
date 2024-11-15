@@ -2,13 +2,14 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import time
+import tracemalloc
 from queue import Queue
 from agent import Agent
 
 class BFSAgent(Agent):
     def bfs(self):
+        tracemalloc.start()
         start_time = time.time()
-        
         queue = Queue()
         queue.put([self.maze.start])
         self.reset_visited()
@@ -23,8 +24,9 @@ class BFSAgent(Agent):
 
                 end_time = time.time()
                 execution_time = end_time - start_time
+                current, peak = tracemalloc.get_traced_memory()
                 print(f"BFS execution time: {execution_time:.6f} seconds")
-                
+                print(f"Peak Memory Usage in BFS: {peak / 1024 / 1024:.2f} MB")
                 return path
             
             # Explore neighbors
@@ -37,7 +39,8 @@ class BFSAgent(Agent):
 
         end_time = time.time()
         execution_time = end_time - start_time
+        current, peak = tracemalloc.get_traced_memory()
         print(f"BFS execution time: {execution_time:.6f} seconds")
-
+        print(f"Peak Memory Usage in BFS: {peak / 1024 / 1024:.2f} MB")
         print("No path found from start to goal.")
         return None 
