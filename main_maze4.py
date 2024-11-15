@@ -6,6 +6,7 @@ from UCS import UCSAgent
 from greedy import GreedyAgent
 from a_star import A_StarAgent
 from hill_climbing import HillClimbingAgent
+from simulated import Simulated
 import json
 
 with open('Mazes json\maze4.json', 'r') as file:
@@ -14,37 +15,42 @@ with open('Mazes json\maze4.json', 'r') as file:
 if __name__ == "__main__":
     maze = Maze(maze4)
 
-    # BFS
-    bfs_agent = BFSAgent(maze)
-    path_bfs = bfs_agent.bfs()
-    maze.plot(path_bfs, 'BFS')
+    # Simulated Annealing
+    sa = Simulated(maze)
+    path_sa = sa.simulated_annealing()
+    maze.plot(path_sa, "Simulated Annealing")
 
-    # DFS
-    dfs_agent = DFSAgent(maze)
-    path_dfs = dfs_agent.dfs()
-    maze.plot(path_dfs, 'DFS')
+    # # BFS
+    # bfs_agent = BFSAgent(maze)
+    # path_bfs = bfs_agent.bfs()
+    # maze.plot(path_bfs, 'BFS')
 
-    # IDS
-    ids_agent = IDSAgent(maze)
-    path_ids = ids_agent.ids()
-    maze.plot(path_ids, 'IDS')
+    # # DFS
+    # dfs_agent = DFSAgent(maze)
+    # path_dfs = dfs_agent.dfs()
+    # maze.plot(path_dfs, 'DFS')
 
-    #UCS
-    ucs_agent = UCSAgent(maze)
-    path_ucs = ucs_agent.ucs()
-    maze.plot(path_ucs, 'UCS')
+    # # IDS
+    # ids_agent = IDSAgent(maze)
+    # path_ids = ids_agent.ids()
+    # maze.plot(path_ids, 'IDS')
 
-    #Greedy
-    greedy_agent = GreedyAgent(maze)
-    path_greedy = greedy_agent.greedy()
-    maze.plot(path_greedy, 'greedy')
+    # #UCS
+    # ucs_agent = UCSAgent(maze)
+    # path_ucs = ucs_agent.ucs()
+    # maze.plot(path_ucs, 'UCS')
 
-    #AStar
-    astar_agent = A_StarAgent(maze)
-    path_astar = astar_agent.a_star()
-    maze.plot(path_astar, 'astar')
+    # #Greedy
+    # greedy_agent = GreedyAgent(maze)
+    # path_greedy = greedy_agent.greedy()
+    # maze.plot(path_greedy, 'greedy')
 
-    # Hill Climbing
-    hill_climbing_agent = HillClimbingAgent(maze)
-    path_hill_climbing = hill_climbing_agent.hill_climbing()
-    maze.plot(path_hill_climbing, 'Hill Climbing')
+    # #AStar
+    # astar_agent = A_StarAgent(maze)
+    # path_astar = astar_agent.a_star()
+    # maze.plot(path_astar, 'astar')
+
+    # # Hill Climbing
+    # hill_climbing_agent = HillClimbingAgent(maze)
+    # path_hill_climbing = hill_climbing_agent.hill_climbing()
+    # maze.plot(path_hill_climbing, 'Hill Climbing')

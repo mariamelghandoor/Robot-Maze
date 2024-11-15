@@ -6,6 +6,7 @@ from UCS import UCSAgent
 from greedy import GreedyAgent
 from a_star import A_StarAgent
 from hill_climbing import HillClimbingAgent
+from simulated import Simulated
 import json
 
 with open('Mazes json\maze1.json', 'r') as file:

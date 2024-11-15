@@ -1,47 +1,69 @@
 import math
 import random
 from agent import Agent
+from collections import OrderedDict
 
 class Simulated(Agent):
-    def get_neighbor(self, x, y, step_size=0.1):
+    def get_neighbor(self, x, y):
         neighbors = {}
         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             nx, ny = x + dx, y + dy
-            if self.maze.is_open(nx, ny):
-                neighbors[(nx, ny)] = self.maze[nx, ny]
+            if self.maze.is_open(nx, ny) and not self.visited[nx][ny]:
+                neighbors[(nx, ny)] = self.maze[nx, ny] - self.maze[x, y]
+                self.visited[nx][ny] = True  # Mark as visited here
+        print(f"Inside the neighbor function: {neighbors}")
         return neighbors
 
-    def choose_cost(self, current_cost, neighbors):
-        minimum = float('inf')
-        for pos, cost in neighbors.items():
-            if cost - current_cost < minimum:
-                minimum = cost - current_cost
-            
-    # Simulated Annealing function
-    def simulated_annealing(self, path, bounds, n_iterations, step_size, temp):
+    def simulated_annealing(self, n_iterations=1000, temp=10):
         # Initial solution
-        x, y = path[-1]
+        x, y = self.maze.start  # Assuming (0, 0)
+        path = [(x, y)]
+        self.visited[0][0] = True
+
+        # Stack for backtracking, storing (x, y, sorted_neighbors)
+        stack = []
+
         for i in range(n_iterations):
             # Decrease temperature
             t = temp / float(i + 1)
-            # Generate candidate solution
-            candidate = self.get_neighbor(x, y, step_size)
-            
-            # Check if we should keep the new solution
-            if candidate_eval < best_eval or random.random() < math.exp((current_eval - candidate_eval) / t):
-                current, current_eval = candidate, candidate_eval
-                if candidate_eval < best_eval:
-                    best, best_eval = candidate, candidate_eval
-                    scores.append(best_eval)
 
-            # Optional: print progress
+            # Get neighbors
+            neighbors = self.get_neighbor(x, y)
+            print(f"neighbors from get_neighbor {neighbors}")
+            if not neighbors:
+                # No neighbors, we need to backtrack
+                print("Dead end reached. Backtracking...")
+                if not stack:
+                    print("No more states to backtrack to. Stopping.")
+                    return path  # No path found
+                # Backtrack to the previous state
+                x, y, sorted_neighbors = stack.pop()
+                print(f"neighbors sorted {sorted_neighbors}")
+                if sorted_neighbors:
+                    first_key = next(iter(sorted_neighbors))
+                    x, y = first_key
+                    print((x, y))
+                continue
+
+            # Sort and add current neighbors to stack
+            sorted_neighbors = OrderedDict(sorted(neighbors.items(), key=lambda item: item[1]))
+            stack.append((x, y, sorted_neighbors))
+            print(f"stack: {stack}")
+            # Choose the lowest-cost neighbor and remove from stack's top state
+            minimum_pos, minimum_cost = sorted_neighbors.popitem(last=False)
+
+            # Check if we should accept the new state
+            if minimum_cost < 0 or random.random() < math.exp(-minimum_cost / t):
+                x, y = minimum_pos
+                path.append((x, y))
+                # Stop if the goal is reached
+                if (x, y) == self.maze.goal:
+                    print("Goal reached!")
+                    return path
+
+            # Optional: Print progress
             if i % 100 == 0:
-                print(f"Iteration {i}, Temperature {t:.3f}, Best Evaluation {best_eval:.5f}")
+                print(f"Iteration {i}, Temperature {t:.3f}")
 
-        return best, best_eval, scores
-
-# Define problem domain
-bounds = [(-5.0, 5.0) for _ in range(2)]  # for a 2-dimensional Rastrigin function
-n_iterations = 1000
-step_size = 0.1
-temp = 10
+        print("Maximum iterations reached.")
+        return path
