@@ -1,19 +1,28 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from maze import Maze
-from bfs_agent import BFSAgent
-from dfs_agent import DFSAgent
-from ids import IDSAgent
-from UCS import UCSAgent
-from greedy import GreedyAgent
-from a_star import A_StarAgent
-from hill_climbing import HillClimbingAgent
-from genetic import GeneticAgent
+from uninformed.bfs_agent import BFSAgent
+from uninformed.dfs_agent import DFSAgent
+from uninformed.ids import IDSAgent
+from uninformed.UCS import UCSAgent
+from heuristic.greedy import GreedyAgent
+from heuristic.a_star import A_StarAgent
+from localsearch.hill_climbing import HillClimbingAgent
+from localsearch.simulated import Simulated
+from localsearch.genetic import GeneticAgent
 import json
 
-with open('Mazes json\maze3.json', 'r') as file:
-    maze3 = json.load(file)
+with open('Mazes json\maze4.json', 'r') as file:
+    maze4 = json.load(file)
 
 if __name__ == "__main__":
-    maze = Maze(maze3)
+    maze = Maze(maze4)
+
+    # Simulated Annealing
+    sa = Simulated(maze)
+    path_sa = sa.simulated_annealing()
+    maze.plot(path_sa, "Simulated Annealing")
 
     # BFS
     bfs_agent = BFSAgent(maze)
@@ -51,6 +60,6 @@ if __name__ == "__main__":
     maze.plot(path_hill_climbing, 'Hill Climbing')
 
     # Genetic
-    genetic_agent = GeneticAgent(maze,max_path_length=12000)
+    genetic_agent = GeneticAgent(maze,max_path_length=11000)
     path_genetic = genetic_agent.genetic()
     maze.plot(path_genetic, 'Genetic')

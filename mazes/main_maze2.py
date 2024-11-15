@@ -1,12 +1,16 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from maze import Maze
-from bfs_agent import BFSAgent
-from dfs_agent import DFSAgent
-from ids import IDSAgent
-from UCS import UCSAgent
-from greedy import GreedyAgent
-from a_star import A_StarAgent
-from hill_climbing import HillClimbingAgent
-from genetic import GeneticAgent
+from uninformed.bfs_agent import BFSAgent
+from uninformed.dfs_agent import DFSAgent
+from uninformed.ids import IDSAgent
+from uninformed.UCS import UCSAgent
+from heuristic.greedy import GreedyAgent
+from heuristic.a_star import A_StarAgent
+from localsearch.hill_climbing import HillClimbingAgent
+from localsearch.simulated import Simulated
+from localsearch.genetic import GeneticAgent
 import json
 
 with open('Mazes json\maze2.json', 'r') as file:
