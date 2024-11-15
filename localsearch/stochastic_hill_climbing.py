@@ -1,12 +1,13 @@
 import os
 import sys
+import random
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import time
 import tracemalloc
 from agent import Agent
 
-class HillClimbingAgent(Agent):
-    def hill_climbing(self):
+class StochasticHillClimbingAgent(Agent):
+    def stochastic_hill_climbing(self):
         tracemalloc.start()
         start_time = time.time()
         
@@ -27,8 +28,8 @@ class HillClimbingAgent(Agent):
                 end_time = time.time()
                 execution_time = end_time - start_time
                 current, peak = tracemalloc.get_traced_memory()
-                print(f"Hill Climbing execution time: {execution_time:.6f} seconds")
-                print(f"Peak Memory Usage in Hill Climbing: {peak / 1024/ 1024:.2f} MB")
+                print(f"Stochastic Hill Climbing execution time: {execution_time:.6f} seconds")
+                print(f"Peak Memory Usage in Stochastic Hill Climbing: {peak / 1024/ 1024:.2f} MB")
                 return path
 
             # Generate neighbors
@@ -39,26 +40,31 @@ class HillClimbingAgent(Agent):
                     neighbors.append((nx, ny))
                     self.visited[nx][ny] = True
 
-            # No more neighbors to explore
             if not neighbors:
                 break
 
-            # Find the neighbor with the minimum heuristic
-            next_position = min(neighbors, key=heuristic)
+            # Rank neighbors based on heuristic
+            ranked_neighbors = sorted(neighbors, key=heuristic)
+            
+            # sometimes pick a neighbor that's not the best
+            if random.random() < 0.2 and len(ranked_neighbors) > 1:  # 20% prob suboptimal
+                next_position = random.choice(ranked_neighbors[1:])
+            else:
+                next_position = ranked_neighbors[0]
 
-            # Stop if no better neighbor is found
+            # Stop if no improvement is found
             if heuristic(next_position) >= heuristic(current_position):
                 break
-            
-            # better neighbor
+
+            # better or stochastic neighbor
             current_position = next_position
             path.append(current_position)
         
         end_time = time.time()
         execution_time = end_time - start_time
         current, peak = tracemalloc.get_traced_memory()
-        print(f"Hill Climbing execution time: {execution_time:.6f} seconds")
-        print(f"Peak Memory Usage in Hill Climbing: {peak / 1024/ 1024:.2f} MB")
+        print(f"Stochastic Hill Climbing execution time: {execution_time:.6f} seconds")
+        print(f"Peak Memory Usage in Stochastic Hill Climbing: {peak / 1024/ 1024:.2f} MB")
         print("Local maximum reached; no path found to goal.")
         
         return path

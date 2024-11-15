@@ -5,8 +5,8 @@ import time
 import tracemalloc
 from agent import Agent
 
-class HillClimbingAgent(Agent):
-    def hill_climbing(self):
+class SteepestAscentHillClimbingAgent(Agent):
+    def steepest_ascent_hill_climbing(self):
         tracemalloc.start()
         start_time = time.time()
         
@@ -27,8 +27,8 @@ class HillClimbingAgent(Agent):
                 end_time = time.time()
                 execution_time = end_time - start_time
                 current, peak = tracemalloc.get_traced_memory()
-                print(f"Hill Climbing execution time: {execution_time:.6f} seconds")
-                print(f"Peak Memory Usage in Hill Climbing: {peak / 1024/ 1024:.2f} MB")
+                print(f"Steepest-Ascent Hill Climbing execution time: {execution_time:.6f} seconds")
+                print(f"Peak Memory Usage in Steepest-Ascent Hill Climbing: {peak / 1024 / 1024:.2f} MB")
                 return path
 
             # Generate neighbors
@@ -39,26 +39,25 @@ class HillClimbingAgent(Agent):
                     neighbors.append((nx, ny))
                     self.visited[nx][ny] = True
 
-            # No more neighbors to explore
             if not neighbors:
                 break
 
-            # Find the neighbor with the minimum heuristic
-            next_position = min(neighbors, key=heuristic)
+            # Find the neighbor with the steepest descent in heuristic
+            next_position = min(neighbors, key=heuristic, default=None)
 
             # Stop if no better neighbor is found
-            if heuristic(next_position) >= heuristic(current_position):
+            if next_position is None or heuristic(next_position) >= heuristic(current_position):
                 break
-            
-            # better neighbor
+
+            # Move to the best neighbor
             current_position = next_position
             path.append(current_position)
         
         end_time = time.time()
         execution_time = end_time - start_time
         current, peak = tracemalloc.get_traced_memory()
-        print(f"Hill Climbing execution time: {execution_time:.6f} seconds")
-        print(f"Peak Memory Usage in Hill Climbing: {peak / 1024/ 1024:.2f} MB")
+        print(f"Steepest-Ascent Hill Climbing execution time: {execution_time:.6f} seconds")
+        print(f"Peak Memory Usage in Steepest-Ascent Hill Climbing: {peak / 1024 / 1024:.2f} MB")
         print("Local maximum reached; no path found to goal.")
         
         return path

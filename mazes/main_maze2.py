@@ -11,6 +11,9 @@ from heuristic.a_star import A_StarAgent
 from localsearch.hill_climbing import HillClimbingAgent
 from localsearch.simulated import Simulated
 from localsearch.genetic import GeneticAgent
+from localsearch.stochastic_hill_climbing import StochasticHillClimbingAgent
+from localsearch.first_choice_hill_climbing import FirstChoiceHillClimbingAgent
+from localsearch.steepest_ascent_hill_climbing import SteepestAscentHillClimbingAgent
 import json
 
 with open('Mazes json\maze2.json', 'r') as file:
@@ -54,6 +57,16 @@ if __name__ == "__main__":
     hill_climbing_agent = HillClimbingAgent(maze)
     path_hill_climbing = hill_climbing_agent.hill_climbing()
     maze.plot(path_hill_climbing, 'Hill Climbing')
+    
+    # Stochastic Hill Climbing
+    stochastic_hill_climbing_agent = StochasticHillClimbingAgent(maze)
+    path_stochastic_hill_climbing = stochastic_hill_climbing_agent.stochastic_hill_climbing()
+    maze.plot(path_stochastic_hill_climbing, 'Stochastic Hill Climbing')
+
+    # First Choice Hill Climbing
+    first_choice_agent = FirstChoiceHillClimbingAgent(maze)
+    path_first_choice = first_choice_agent.first_choice_hill_climbing()
+    maze.plot(path_first_choice, 'First-Choice Hill Climbing')
 
     # Simulated Annealing
     sa = Simulated(maze)
@@ -61,6 +74,6 @@ if __name__ == "__main__":
     maze.plot(path_sa, "Simulated Annealing")
 
     # Genetic
-    genetic_agent = GeneticAgent(maze,max_path_length=3000)
+    genetic_agent = GeneticAgent(maze,max_path_length=2000)
     path_genetic = genetic_agent.genetic()
     maze.plot(path_genetic, 'Genetic')
