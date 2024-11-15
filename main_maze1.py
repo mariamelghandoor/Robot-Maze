@@ -7,6 +7,7 @@ from greedy import GreedyAgent
 from a_star import A_StarAgent
 from hill_climbing import HillClimbingAgent
 from simulated import Simulated
+from genetic import GeneticAgent
 import json
 
 with open('Mazes json\maze1.json', 'r') as file:
@@ -49,3 +50,8 @@ if __name__ == "__main__":
     hill_climbing_agent = HillClimbingAgent(maze)
     path_hill_climbing = hill_climbing_agent.hill_climbing()
     maze.plot(path_hill_climbing, 'Hill Climbing')
+
+    # Genetic
+    genetic_agent = GeneticAgent(maze,max_path_length=2000)
+    path_genetic = genetic_agent.genetic()
+    maze.plot(path_genetic, 'Genetic')
