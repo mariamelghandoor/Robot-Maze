@@ -1,27 +1,26 @@
 import math
 import random
-from agent import Agent
 from collections import OrderedDict
 
-class Simulated(Agent):
+class Simulated:
+    def __init__(self, maze):
+        self.maze = maze
+        self.visited = [[False for _ in range(maze.width)] for _ in range(maze.height)]
+
     def get_neighbor(self, x, y):
         neighbors = {}
         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             nx, ny = x + dx, y + dy
             if self.maze.is_open(nx, ny) and not self.visited[nx][ny]:
                 neighbors[(nx, ny)] = self.maze[nx, ny] - self.maze[x, y]
-                self.visited[nx][ny] = True  # Mark as visited here
-        print(f"Inside the neighbor function: {neighbors}")
         return neighbors
 
-    def simulated_annealing(self, n_iterations=1000, temp=10):
-        # Initial solution
-        x, y = self.maze.start  # Assuming (0, 0)
+    def simulated_annealing(self, n_iterations=1000, temp=10000, max_restarts=3):
+        # Initialize start point and path
+        x, y = self.maze.start
         path = [(x, y)]
-        self.visited[0][0] = True
-
-        # Stack for backtracking, storing (x, y, sorted_neighbors)
-        stack = []
+        self.visited[x][y] = True
+        restarts = 0
 
         for i in range(n_iterations):
             # Decrease temperature
@@ -29,41 +28,39 @@ class Simulated(Agent):
 
             # Get neighbors
             neighbors = self.get_neighbor(x, y)
-            print(f"neighbors from get_neighbor {neighbors}")
+            
+            # If no neighbors available, try to backtrack
             if not neighbors:
-                # No neighbors, we need to backtrack
-                print("Dead end reached. Backtracking...")
-                if not stack:
-                    print("No more states to backtrack to. Stopping.")
-                    return path  # No path found
-                # Backtrack to the previous state
-                x, y, sorted_neighbors = stack.pop()
-                print(f"neighbors sorted {sorted_neighbors}")
-                if sorted_neighbors:
-                    first_key = next(iter(sorted_neighbors))
-                    x, y = first_key
-                    print((x, y))
-                continue
+                if len(path) > 1:
+                    path.pop()  # Remove the current dead-end position
+                    x, y = path[-1]  # Go back to the previous position
+                    continue
+                else:
+                    # If backtracking fails (at start), restart
+                    if restarts < max_restarts:
+                        restarts += 1
+                        x, y = self.maze.start
+                        path = [(x, y)]
+                        self.visited = [[False for _ in range(self.maze.width)] for _ in range(self.maze.height)]
+                        self.visited[x][y] = True
+                        continue
+                    else:
+                        # Return path if max restarts reached
+                        return path
 
-            # Sort and add current neighbors to stack
+            # Sort neighbors by cost difference
             sorted_neighbors = OrderedDict(sorted(neighbors.items(), key=lambda item: item[1]))
-            stack.append((x, y, sorted_neighbors))
-            print(f"stack: {stack}")
-            # Choose the lowest-cost neighbor and remove from stack's top state
             minimum_pos, minimum_cost = sorted_neighbors.popitem(last=False)
 
-            # Check if we should accept the new state
+            # Decide whether to accept the new position based on temperature
             if minimum_cost < 0 or random.random() < math.exp(-minimum_cost / t):
                 x, y = minimum_pos
                 path.append((x, y))
+                self.visited[x][y] = True
+
                 # Stop if the goal is reached
                 if (x, y) == self.maze.goal:
-                    print("Goal reached!")
-                    return path
+                    return path  # Return only the final path once the goal is reached
 
-            # Optional: Print progress
-            if i % 100 == 0:
-                print(f"Iteration {i}, Temperature {t:.3f}")
-
-        print("Maximum iterations reached.")
+        # Return the path as it stands if iterations run out
         return path
