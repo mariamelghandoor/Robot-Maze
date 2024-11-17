@@ -49,23 +49,23 @@ if __name__ == "__main__":
     #Greedy  --- Manhatten
     greedy_agent = GreedyAgent(maze)
     path_greedy = greedy_agent.greedy()
-    maze.plot(path_greedy, 'greedy')
+    maze.plot(path_greedy, 'greedy Manhatten')
 
     #AStar   --- Manhatten
     astar_agent = A_StarAgent(maze)
     path_astar = astar_agent.a_star()
-    maze.plot(path_astar, 'astar')
+    maze.plot(path_astar, 'astar Manhatten')
 
 
     # AStar  ---  Euclidean 
     astar_agent = A_StarAgent2(maze)
     path_astar = astar_agent.a_star()
-    maze.plot(path_astar, 'astar')
+    maze.plot(path_astar, 'astar Euclidean')
 
     #Greedy  ---  Euclidean
     greedy_agent = GreedyAgent2(maze)
     path_greedy = greedy_agent.greedy()
-    maze.plot(path_greedy, 'greedy')
+    maze.plot(path_greedy, 'greedy Euclidean')
 
     # Hill Climbing
     hill_climbing_agent = HillClimbingAgent(maze)
