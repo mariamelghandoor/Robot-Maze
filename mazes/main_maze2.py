@@ -8,6 +8,8 @@ from uninformed.ids import IDSAgent
 from uninformed.UCS import UCSAgent
 from heuristic.greedy import GreedyAgent
 from heuristic.a_star import A_StarAgent
+from heuristic2.greedy import GreedyAgent2
+from heuristic2.a_star import A_StarAgent2
 from localsearch.hill_climbing import HillClimbingAgent
 from localsearch.simulated import Simulated
 from localsearch.genetic import GeneticAgent
@@ -38,20 +40,30 @@ if __name__ == "__main__":
     path_ids = ids_agent.ids()
     maze.plot(path_ids, 'IDS')
 
-    #UCS
+    #UCS 
     ucs_agent = UCSAgent(maze)
     path_ucs = ucs_agent.ucs()
     maze.plot(path_ucs, 'UCS')
 
-    #Greedy
+    #Greedy  --- Manhatten
     greedy_agent = GreedyAgent(maze)
     path_greedy = greedy_agent.greedy()
     maze.plot(path_greedy, 'greedy')
 
-    #AStar
+    #AStar   --- Manhatten
     astar_agent = A_StarAgent(maze)
     path_astar = astar_agent.a_star()
     maze.plot(path_astar, 'astar')
+
+    # AStar  ---  Euclidean 
+    astar_agent = A_StarAgent2(maze)
+    path_astar = astar_agent.a_star()
+    maze.plot(path_astar, 'astar')
+
+    #Greedy  ---  Euclidean
+    greedy_agent = GreedyAgent2(maze)
+    path_greedy = greedy_agent.greedy()
+    maze.plot(path_greedy, 'greedy')
 
     # Hill Climbing
     hill_climbing_agent = HillClimbingAgent(maze)
