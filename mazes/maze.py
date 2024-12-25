@@ -33,15 +33,16 @@ class Maze:
 
     def plot_Qlearning(self, path, method_name):
         maze_array = np.array(self.grid)
+        print(maze_array)
         maze_array_cost = copy.deepcopy(maze_array)
 
         # Initialize visualization array
         maze_visual = np.zeros_like(maze_array, dtype=int)  # All open paths initially
 
         # Assign values for each cell type
-        maze_visual[maze_array == None] = 0    # Obstacle (black)
-        maze_visual[maze_array == -1] = 1       # Hole (blue)
-        maze_visual[maze_array == 0] = 2        # Open cell (white)
+        maze_visual[maze_array == 'None'] = 0    # Obstacle (black)
+        maze_visual[maze_array == '-1'] = 1       # Hole (blue)
+        maze_visual[maze_array == '-0.04'] = 2        # Open cell (white)
 
         plt.figure(figsize=(10, 10))
 
@@ -82,7 +83,7 @@ class Maze:
 
         # Add legend and title
         plt.legend(loc='upper right')
-        plt.title(f'Maze Visualization with {method_name} Path\nTotal Cost: {Total}', fontsize=16)
+        plt.title(f'Maze Visualization with {method_name} ', fontsize=16)
 
         plt.show()
 

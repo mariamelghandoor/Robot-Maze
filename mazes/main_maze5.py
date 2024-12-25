@@ -58,7 +58,7 @@ q_agent = QLearning(shape, learning_rate, discount_factor, epsilon)
 agent = Agent(maze)
 
 # Train the agent
-episodes = 1000
+episodes = 10000
 for episode in range(episodes):
     s_t = maze.start
     agent.reset_visited()
