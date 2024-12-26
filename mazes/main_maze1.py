@@ -16,6 +16,7 @@ from localsearch.genetic import GeneticAgent
 from localsearch.stochastic_hill_climbing import StochasticHillClimbingAgent
 from localsearch.first_choice_hill_climbing import FirstChoiceHillClimbingAgent
 from localsearch.steepest_ascent_hill_climbing import SteepestAscentHillClimbingAgent
+from QLearning.QLearning import QLearning
 import json
 
 with open('Mazes json\maze1.json', 'r') as file:
@@ -89,4 +90,6 @@ if __name__ == "__main__":
     # path_genetic = genetic_agent.genetic()
     # maze.plot(path_genetic, 'Genetic')
 
+    # Q-Learning
+    q_agent = QLearning(maze)
     
