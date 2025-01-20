@@ -1,6 +1,6 @@
 # Maze-Solving Platform
 
-Welcome to the Maze-Solving Platform! This project is designed to help you explore and understand various search algorithms used in artificial intelligence and robotics. The platform allows a robot to navigate through a maze to reach a goal using different algorithms, including BFS, DFS, A*, Dijkstra's, and more. Each algorithm's pathfinding process is visualized in real-time, making it an excellent tool for learning and testing AI techniques.
+Welcome to the Maze-Solving Platform! This project is designed to help you explore and understand various search algorithms used in artificial intelligence and robotics. The platform allows a robot to navigate through a maze to reach a goal using different algorithms, including BFS, DFS, A*, Dijkstra's, Reinforcement Learning and more. Each algorithm's pathfinding process is visualized in real-time, making it an excellent tool for learning and testing AI techniques.
 
 ## Features
 
